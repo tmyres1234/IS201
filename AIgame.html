@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NBA Guessing Game</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0b1a3a, #1c3faa);
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 32px;
+}
+
+.container {
+    background: white;
+    color: black;
+    width: 70%;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+}
+
+input {
+    width: 60%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.guessBtn {
+    background: #1c3faa;
+    color: white;
+}
+
+.hintBtn {
+    background: #ff9800;
+    color: white;
+}
+
+.resetBtn {
+    background: #e91e63;
+    color: white;
+}
+
+.card {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+
+.green { color: green; font-weight: bold; }
+.red { color: red; font-weight: bold; }
+.blue { color: blue; font-weight: bold; }
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🏀 NBA Player Guessing Game</h1>
+
+<div class="container">
+
+<input type="text" id="guessInput" placeholder="Guess an NBA player...">
+
+<br>
+
+<button class="guessBtn" onclick="checkGuess()">Guess</button>
+<button class="hintBtn" onclick="giveHint()">Hint</button>
+<button class="resetBtn" onclick="newRound()">New Player</button>
+
+<div class="card">
+    <p id="message"></p>
+    <p id="comparison"></p>
+</div>
+
+</div>
+
+<script>
+
+// 50 simplified NBA players
+const players = [
+{ name:"Michael Jordan", team:"Bulls", position:"SG", age:40, height:78, weight:216 },
+{ name:"LeBron James", team:"Lakers", position:"SF", age:39, height:81, weight:250 },
+{ name:"Kobe Bryant", team:"Lakers", position:"SG", age:37, height:78, weight:212 },
+{ name:"Stephen Curry", team:"Warriors", position:"PG", age:36, height:75, weight:185 },
+{ name:"Kevin Durant", team:"Suns", position:"SF", age:35, height:82, weight:240 },
+{ name:"Shaquille O'Neal", team:"Lakers", position:"C", age:39, height:85, weight:325 },
+{ name:"Tim Duncan", team:"Spurs", position:"PF", age:40, height:83, weight:250 },
+{ name:"Kawhi Leonard", team:"Clippers", position:"SF", age:32, height:79, weight:225 },
+{ name:"Giannis Antetokounmpo", team:"Bucks", position:"PF", age:29, height:83, weight:243 },
+{ name:"James Harden", team:"Clippers", position:"SG", age:34, height:77, weight:220 },
+
+{ name:"Derrick Rose", team:"Bulls", position:"PG", age:35, height:75, weight:200 },
+{ name:"Allen Iverson", team:"76ers", position:"PG", age:45, height:72, weight:165 },
+{ name:"Chris Paul", team:"Warriors", position:"PG", age:38, height:72, weight:175 },
+{ name:"Russell Westbrook", team:"Clippers", position:"PG", age:35, height:75, weight:200 },
+{ name:"Damian Lillard", team:"Bucks", position:"PG", age:33, height:75, weight:195 },
+
+{ name:"Dirk Nowitzki", team:"Mavericks", position:"PF", age:40, height:84, weight:245 },
+{ name:"Hakeem Olajuwon", team:"Rockets", position:"C", age:52, height:82, weight:255 },
+{ name:"David Robinson", team:"Spurs", position:"C", age:53, height:85, weight:235 },
+{ name:"Patrick Ewing", team:"Knicks", position:"C", age:54, height:84, weight:240 },
+{ name:"Charles Barkley", team:"Suns", position:"PF", age:60, height:78, weight:252 },
+
+{ name:"Larry Bird", team:"Celtics", position:"SF", age:60, height:80, weight:220 },
+{ name:"Magic Johnson", team:"Lakers", position:"PG", age:64, height:84, weight:220 },
+{ name:"Bill Russell", team:"Celtics", position:"C", age:88, height:82, weight:215 },
+{ name:"Wilt Chamberlain", team:"Lakers", position:"C", age:63, height:85, weight:275 },
+{ name:"Jerry West", team:"Lakers", position:"SG", age:86, height:77, weight:175 },
+
+{ name:"Paul George", team:"Clippers", position:"SF", age:33, height:80, weight:220 },
+{ name:"Anthony Davis", team:"Lakers", position:"PF", age:31, height:82, weight:253 },
+{ name:"Nikola Jokic", team:"Nuggets", position:"C", age:29, height:84, weight:284 },
+{ name:"Luka Doncic", team:"Mavericks", position:"PG", age:25, height:79, weight:230 },
+{ name:"Joel Embiid", team:"76ers", position:"C", age:30, height:85, weight:280 },
+
+{ name:"Trae Young", team:"Hawks", position:"PG", age:25, height:73, weight:180 },
+{ name:"Zion Williamson", team:"Pelicans", position:"PF", age:24, height:78, weight:284 },
+{ name:"Ja Morant", team:"Grizzlies", position:"PG", age:24, height:74, weight:174 },
+{ name:"Devin Booker", team:"Suns", position:"SG", age:27, height:78, weight:206 },
+{ name:"Jimmy Butler", team:"Heat", position:"SF", age:34, height:79, weight:230 },
+
+{ name:"Carmelo Anthony", team:"Knicks", position:"SF", age:39, height:80, weight:238 },
+{ name:"Tracy McGrady", team:"Rockets", position:"SG", age:44, height:80, weight:210 },
+{ name:"Vince Carter", team:"Raptors", position:"SG", age:47, height:78, weight:220 },
+{ name:"Ray Allen", team:"Celtics", position:"SG", age:48, height:77, weight:205 },
+{ name:"Reggie Miller", team:"Pacers", position:"SG", age:58, height:79, weight:185 },
+
+{ name:"Klay Thompson", team:"Warriors", position:"SG", age:34, height:79, weight:215 },
+{ name:"Draymond Green", team:"Warriors", position:"PF", age:34, height:79, weight:230 },
+{ name:"Ben Simmons", team:"Nets", position:"PG", age:27, height:82, weight:240 },
+{ name:"Rudy Gobert", team:"Timberwolves", position:"C", age:31, height:85, weight:258 },
+{ name:"Karl-Anthony Towns", team:"Timberwolves", position:"C", age:28, height:84, weight:248 }
+];
+
+let currentPlayer = getRandomPlayer();
+
+function getRandomPlayer() {
+    return players[Math.floor(Math.random() * players.length)];
+}
+
+function newRound() {
+    currentPlayer = getRandomPlayer();
+    document.getElementById("message").innerHTML = "New player loaded! 🔄";
+    document.getElementById("comparison").innerHTML = "";
+    document.getElementById("guessInput").value = "";
+}
+
+function checkGuess() {
+    let guess = document.getElementById("guessInput").value.trim();
+
+    if (guess.toLowerCase() === currentPlayer.name.toLowerCase()) {
+        document.getElementById("message").innerHTML =
+        "🎉 Correct! It was " + currentPlayer.name + " (new round starting...)";
+        setTimeout(newRound, 1500);
+    } else {
+        document.getElementById("message").innerHTML = "❌ Not correct — check comparison below!";
+        compareGuess(guess);
+    }
+}
+
+// Poeltl-style comparison system
+function compareGuess(guess) {
+
+    let guessedPlayer = players.find(p => p.name.toLowerCase() === guess.toLowerCase());
+
+    if (!guessedPlayer) {
+        document.getElementById("comparison").innerHTML =
+        "Player not found in database.";
+        return;
+    }
+
+    let output = "";
+
+    output += compareStat("Age", guessedPlayer.age, currentPlayer.age);
+    output += compareStat("Height", guessedPlayer.height, currentPlayer.height);
+    output += compareStat("Weight", guessedPlayer.weight, currentPlayer.weight);
+
+    output += compareText("Team", guessedPlayer.team, currentPlayer.team);
+    output += compareText("Position", guessedPlayer.position, currentPlayer.position);
+
+    document.getElementById("comparison").innerHTML = output;
+}
+
+function compareStat(label, guessVal, targetVal) {
+    if (guessVal === targetVal) {
+        return label + ": <span class='green'>Same</span><br>";
+    } else if (guessVal < targetVal) {
+        return label + ": <span class='red'>Too low ↑ target is higher</span><br>";
+    } else {
+        return label + ": <span class='red'>Too high ↓ target is lower</span><br>";
+    }
+}
+
+function compareText(label, guessVal, targetVal) {
+    if (guessVal === targetVal) {
+        return label + ": <span class='green'>Match</span><br>";
+    } else {
+        return label + ": <span class='blue'>Different</span><br>";
+    }
+}
+
+function giveHint() {
+    alert("Try comparing stats like age, height, team, and position!");
+}
+
+</script>
+
+</body>
+</html>

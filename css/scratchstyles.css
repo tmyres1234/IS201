@@ -1,0 +1,29 @@
+/* Background and font */
+body {
+    background-color: lightblue;
+    font-family: Arial, sans-serif;
+    color: black;
+}
+
+/* Div styling */
+.box {
+    background-color: white;
+    margin: 20px;
+    padding: 15px;
+    border: 2px solid black;
+}
+
+/* Headings */
+h1 {
+    color: darkred;
+    text-align: center;
+}
+
+h2 {
+    color: darkgreen;
+}
+
+/* Links */
+a {
+    color: blue;
+}
