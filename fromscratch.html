@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best NBA Players</title>
+
+    <!-- Link to CSS -->
+    <link href="css/scratchstyles.css" rel="stylesheet" />
+</head>
+<body>
+
+<!-- LINK TO PROFESSIONAL RESUME PAGE -->
+<div class="box">
+    <a href="index.html" class="game-link">
+        Link to my Professional Resume Page (bootsrap)
+    </a>
+</div>
+
+<!-- HEADER SECTION -->
+<header class="box">
+    <h1>NBA Legends Guessing Game</h1>
+    <p>Explore the greatest NBA players of all time and test your knowledge!</p>
+
+    <!-- Link to your guessing game -->
+    <a href="AIgame.html" class="game-link">
+        Play the NBA Guessing Game!!!
+    </a>
+</header>
+
+<!-- Anchor top -->
+<h1 id="top">Best NBA Players of All Time</h1>
+
+<p><a href="#video">Go to Video Section</a></p>
+
+<!-- DIV 1 -->
+<div class="box">
+    <h2>Top 3 Players</h2>
+
+    <ol>
+        <li>Michael Jordan
+            <br>
+            <img src="assets/img/mike jordan.jpg">
+            <ul>
+                <li>6 Championships</li>
+                <li>Bulls</li>
+            </ul>
+        </li>
+
+        <li>LeBron James
+            <br>
+            <img src="assets/img/lebron jamews.jpg">
+            <ul>
+                <li>4 Championships</li>
+                <li>All-time leading scorer</li>
+            </ul>
+        </li>
+
+        <li>Kobe Bryant
+            <br>
+            <img src="assets/img/kobee.jpg">
+            <ul>
+                <li>5 Championships</li>
+                <li>Lakers</li>
+            </ul>
+        </li>
+    </ol>
+</div>
+
+<!-- DIV 3 -->
+<div class="box" id="video">
+    <h2>Highlight Videos</h2>
+
+    <ol>
+        <li>Michael Jordan Highlights:<br>
+            <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/jbW4f60dCNA?si=r-7jM72u5zQFbpVc"
+                frameborder="0" allowfullscreen>
+            </iframe>
+        </li>
+
+        <li>LeBron James Highlights:<br>
+            <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/-9lP95Qo-I0?si=n_0Eg1xwsaPobP1O"
+                frameborder="0" allowfullscreen>
+            </iframe>
+        </li>
+
+        <li>Kobe Bryant Highlights:<br>
+            <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/1fjhIWJSxfw?si=SlJIUMz-ptICQHNl"
+                frameborder="0" allowfullscreen>
+            </iframe>
+        </li>
+    </ol>
+</div>
+
+<!-- DIV 4 (Tableau) -->
+<div class="box">
+    <h2>NBA Data</h2>
+
+    <div class='tableauPlaceholder' id='viz1776267393568' style='position: relative'>
+        <noscript>
+            <a href='#'>
+                <img alt='Dashboard'
+                src='https://public.tableau.com/static/images/D5/D5Y3ZCHTS/1_rss.png'
+                style='border: none' />
+            </a>
+        </noscript>
+
+        <object class='tableauViz' style='display:none;'>
+            <param name='host_url' value='https://public.tableau.com/' />
+            <param name='embed_code_version' value='3' />
+            <param name='path' value='shared/D5Y3ZCHTS' />
+            <param name='toolbar' value='yes'/>
+        </object>
+    </div>
+
+    <script type='text/javascript'>
+        var divElement = document.getElementById('viz1776267393568');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width='800px';
+        vizElement.style.height='600px';
+
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    </script>
+</div>
+
+<p><a href="#top">Back to Top</a></p>
+
+</body>
+</html>
